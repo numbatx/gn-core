@@ -15,6 +15,11 @@ const pkPrefixSize = 12
 // FileModeUserReadWrite represents the permission for a file which allows the user for reading and writing
 const FileModeUserReadWrite = 0600
 
+// FileModeReadWrite represents the permission for a file which allows reading and writing for user and group and read
+// for others
+const FileModeReadWrite = 0664
+
+
 // MetachainShardId will be used to identify a shard ID as metachain
 const MetachainShardId = uint32(0xFFFFFFFF)
 
@@ -62,6 +67,15 @@ const BuiltInFunctionSetDCTRole = "DCTSetRole"
 
 // BuiltInFunctionUnSetDCTRole is the key for the Dharitri Core Token (DCT) unset built-in function
 const BuiltInFunctionUnSetDCTRole = "DCTUnSetRole"
+
+// BuiltInFunctionDCTSetLimitedTransfer is the key for the Dharitri Core Token (DCT) built-in function which sets the property
+// for the token to be transferable only through accounts with transfer roles
+const BuiltInFunctionDCTSetLimitedTransfer = "DCTSetLimitedTransfer"
+
+// BuiltInFunctionDCTUnSetLimitedTransfer is the key for the Dharitri Core Token (DCT) built-in function which unsets the property
+// for the token to be transferable only through accounts with transfer roles
+const BuiltInFunctionDCTUnSetLimitedTransfer = "DCTUnSetLimitedTransfer"
+
 
 // BuiltInFunctionDCTLocalMint is the key for the Dharitri Core Token (DCT) local mint built-in function
 const BuiltInFunctionDCTLocalMint = "DCTLocalMint"
@@ -114,6 +128,10 @@ const DCTRoleNFTAddURI = "DCTRoleNFTAddURI"
 
 // DCTRoleNFTUpdateAttributes is the constant string for the local role of updating attributes for DCT NFT tokens
 const DCTRoleNFTUpdateAttributes = "DCTRoleNFTUpdateAttributes"
+
+// DCTRoleTransfer is the constant string for the local role to transfer DCT, only for special tokens
+const DCTRoleTransfer = "DCTTransferRole"
+
 
 // DCTType defines the possible types in case of DCT tokens
 type DCTType uint32
@@ -195,3 +213,10 @@ const BuiltInCostString = "BuiltInCost"
 
 // DCTSCAddress is the hard-coded address for dct issuing smart contract
 var DCTSCAddress = []byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 255, 255}
+
+// SCDeployIdentifier is the identifier for a smart contract deploy
+const SCDeployIdentifier = "SCDeploy"
+
+// SCUpgradeIdentifier is the identifier for a smart contract upgrade
+const SCUpgradeIdentifier = "SCUpgrade"
+

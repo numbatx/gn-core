@@ -187,10 +187,11 @@ type TransactionWithFeeHandler interface {
 	GetValue() *big.Int
 }
 
+// UserAccountHandler models a user account
 type UserAccountHandler interface {
+	RetrieveValueFromDataTrieTracker(key []byte) ([]byte, error)
 	GetBalance() *big.Int
 	GetNonce() uint64
 	AddressBytes() []byte
 	IsInterfaceNil() bool
 }
-

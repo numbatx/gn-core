@@ -17,7 +17,6 @@ require (
 
 require (
 	github.com/davecgh/go-spew v1.1.0 // indirect
-
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	golang.org/x/sys v0.0.0-20210615035016-665e8c7367d1 // indirect
 	google.golang.org/protobuf v1.26.0 // indirect

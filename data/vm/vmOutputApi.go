@@ -75,7 +75,6 @@ func (vmOutput *VMOutputApi) GetFirstReturnData(asType ReturnDataKind) (interfac
 	case AsString:
 		return string(returnData), nil
 	case AsHex:
-
 		return hex.EncodeToString(returnData), nil
 	}
 

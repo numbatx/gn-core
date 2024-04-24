@@ -175,7 +175,9 @@ func SafeAddUint64(a, b uint64) (uint64, error) {
 // IsValidDCTRole returns true if the input string represents a valid DCT role
 func IsValidDCTRole(role string) bool {
 	switch role {
-	case DCTRoleNFTCreate, DCTRoleNFTAddQuantity, DCTRoleNFTBurn, DCTRoleLocalMint, DCTRoleLocalBurn:
+	case DCTRoleNFTCreate, DCTRoleNFTAddQuantity, DCTRoleNFTBurn, DCTRoleLocalMint, DCTRoleLocalBurn, DCTRoleNFTUpdateAttributes,
+		DCTRoleNFTAddURI, DCTRoleTransfer:
+
 		return true
 	default:
 		return false
