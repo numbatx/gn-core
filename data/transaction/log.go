@@ -1,4 +1,4 @@
-//go:generate protoc -I=proto -I=$GOPATH/src -I=$GOPATH/src/github.com/numbatx/protobuf/protobuf  --gogoslick_out=. log.proto
+//go:generate protoc -I=. -I=$GOPATH/src -I=$GOPATH/src/github.com/numbatx/protobuf/protobuf  --gogoslick_out=. log.proto
 package transaction
 
 import (
