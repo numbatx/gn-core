@@ -93,6 +93,7 @@ const BuiltInFunctionDCTNFTUpdateAttributes = "DCTNFTUpdateAttributes"
 // BuiltInFunctionMultiDCTNFTTransfer is the key for the Dharitri Core Token (DCT) multi transfer built-in function
 const BuiltInFunctionMultiDCTNFTTransfer = "MultiDCTNFTTransfer"
 
+
 // DCTRoleLocalMint is the constant string for the local role of mint for DCT tokens
 const DCTRoleLocalMint = "DCTRoleLocalMint"
 

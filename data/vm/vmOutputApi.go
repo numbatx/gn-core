@@ -4,6 +4,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"math/big"
+
 )
 
 // VMOutputApi is a wrapper over the vmcommon's VMOutput
@@ -36,6 +37,7 @@ type OutputAccountApi struct {
 	CodeMetadata    []byte                       `json:"codeMetaData"`
 	OutputTransfers []OutputTransferApi          `json:"outputTransfers"`
 	CallType        CallType                     `json:"callType"`
+
 }
 
 // OutputTransferApi is a wrapper over vmcommon's OutputTransfer
@@ -45,6 +47,7 @@ type OutputTransferApi struct {
 	Data          []byte   `json:"data"`
 	CallType      CallType `json:"callType"`
 	SenderAddress string   `json:"senderAddress"`
+
 }
 
 // LogEntryApi is a wrapper over vmcommon's LogEntry
@@ -57,6 +60,7 @@ type LogEntryApi struct {
 
 // GetFirstReturnData is a helper function that returns the first ReturnData of VMOutput, interpreted as specified.
 func (vmOutput *VMOutputApi) GetFirstReturnData(asType ReturnDataKind) (interface{}, error) {
+
 	if len(vmOutput.ReturnData) == 0 {
 		return nil, fmt.Errorf("no return data")
 	}
@@ -71,6 +75,7 @@ func (vmOutput *VMOutputApi) GetFirstReturnData(asType ReturnDataKind) (interfac
 	case AsString:
 		return string(returnData), nil
 	case AsHex:
+
 		return hex.EncodeToString(returnData), nil
 	}
 

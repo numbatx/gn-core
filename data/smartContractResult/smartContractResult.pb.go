@@ -10,6 +10,7 @@ import (
 	proto "github.com/gogo/protobuf/proto"
 	github_com_numbatx_gn_core_data "github.com/numbatx/gn-core/data"
 	github_com_numbatx_gn_core_data_vm "github.com/numbatx/gn-core/data/vm"
+
 	io "io"
 	math "math"
 	math_big "math/big"
@@ -46,6 +47,7 @@ type SmartContractResult struct {
 	CodeMetadata   []byte                                      `protobuf:"bytes,14,opt,name=CodeMetadata,proto3" json:"codeMetadata,omitempty"`
 	ReturnMessage  []byte                                      `protobuf:"bytes,15,opt,name=ReturnMessage,proto3" json:"returnMessage,omitempty"`
 	OriginalSender []byte                                      `protobuf:"bytes,16,opt,name=OriginalSender,proto3" json:"originalSender,omitempty"`
+
 }
 
 func (m *SmartContractResult) Reset()      { *m = SmartContractResult{} }
@@ -161,6 +163,7 @@ func (m *SmartContractResult) GetGasPrice() uint64 {
 }
 
 func (m *SmartContractResult) GetCallType() github_com_numbatx_gn_core_data_vm.CallType {
+
 	if m != nil {
 		return m.CallType
 	}
@@ -234,6 +237,7 @@ var fileDescriptor_edc1605de0d3d805 = []byte{
 	0xc0, 0xf7, 0x8c, 0x80, 0x1f, 0x19, 0x69, 0x9c, 0x67, 0x04, 0x7c, 0x3c, 0x23, 0x8d, 0xe3, 0x33,
 	0xd2, 0x38, 0x39, 0x23, 0x8d, 0x37, 0x2b, 0x7f, 0xb8, 0x43, 0x46, 0x0b, 0xe6, 0x3a, 0x78, 0xf0,
 	0x2b, 0x00, 0x00, 0xff, 0xff, 0x92, 0x92, 0xb7, 0x96, 0x61, 0x04, 0x00, 0x00,
+
 }
 
 func (this *SmartContractResult) Equal(that interface{}) bool {
@@ -1017,6 +1021,7 @@ func (m *SmartContractResult) Unmarshal(dAtA []byte) error {
 				b := dAtA[iNdEx]
 				iNdEx++
 				m.CallType |= github_com_numbatx_gn_core_data_vm.CallType(b&0x7F) << shift
+
 				if b < 0x80 {
 					break
 				}

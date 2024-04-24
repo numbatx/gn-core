@@ -193,3 +193,4 @@ type UserAccountHandler interface {
 	AddressBytes() []byte
 	IsInterfaceNil() bool
 }
+

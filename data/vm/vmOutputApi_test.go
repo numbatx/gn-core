@@ -5,6 +5,7 @@ import (
 	"math/big"
 	"testing"
 
+
 	"github.com/stretchr/testify/require"
 )
 
@@ -18,6 +19,7 @@ func TestVMOutputApi_GetFirstReturnDataAsBigInt(t *testing.T) {
 	}
 
 	res, err := vmOutputApi.GetFirstReturnData(AsBigInt)
+
 	require.NoError(t, err)
 
 	resBigInt, ok := res.(*big.Int)
@@ -36,6 +38,7 @@ func TestVMOutputApi_GetFirstReturnDataAsBigIntString(t *testing.T) {
 	}
 
 	res, err := vmOutputApi.GetFirstReturnData(AsBigIntString)
+
 	require.NoError(t, err)
 
 	resBigIntString, ok := res.(string)
@@ -54,6 +57,7 @@ func TestVMOutputApi_GetFirstReturnDataAsHex(t *testing.T) {
 	}
 
 	res, err := vmOutputApi.GetFirstReturnData(AsHex)
+
 	require.NoError(t, err)
 
 	resHexString, ok := res.(string)
@@ -70,6 +74,7 @@ func TestVMOutputApi_GetFirstReturnDataAsString(t *testing.T) {
 	}
 
 	res, err := vmOutputApi.GetFirstReturnData(AsString)
+
 	require.NoError(t, err)
 
 	resString, ok := res.(string)
