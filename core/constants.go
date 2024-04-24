@@ -84,6 +84,16 @@ const BuiltInFunctionDCTNFTCreateRoleTransfer = "DCTNFTCreateRoleTransfer"
 // BuiltInFunctionDCTNFTBurn is the key for the Dharitri Core Token (DCT) NFT burn built-in function
 const BuiltInFunctionDCTNFTBurn = "DCTNFTBurn"
 
+// BuiltInFunctionDCTNFTAddURI is the key for the Dharitri Core Token (DCT) NFT add URI built-in function
+const BuiltInFunctionDCTNFTAddURI = "DCTNFTAddURI"
+
+// BuiltInFunctionDCTNFTUpdateAttributes is the key for the Dharitri Core Token (DCT) NFT update attributes built-in function
+const BuiltInFunctionDCTNFTUpdateAttributes = "DCTNFTUpdateAttributes"
+
+// BuiltInFunctionMultiDCTNFTTransfer is the key for the Dharitri Core Token (DCT) multi transfer built-in function
+const BuiltInFunctionMultiDCTNFTTransfer = "MultiDCTNFTTransfer"
+
+
 // DCTRoleLocalMint is the constant string for the local role of mint for DCT tokens
 const DCTRoleLocalMint = "DCTRoleLocalMint"
 
@@ -98,6 +108,12 @@ const DCTRoleNFTAddQuantity = "DCTRoleNFTAddQuantity"
 
 // DCTRoleNFTBurn is the constant string for the local role of burn for DCT NFT tokens
 const DCTRoleNFTBurn = "DCTRoleNFTBurn"
+
+// DCTRoleNFTAddURI is the constant string for the local role of adding a URI for DCT NFT tokens
+const DCTRoleNFTAddURI = "DCTRoleNFTAddURI"
+
+// DCTRoleNFTUpdateAttributes is the constant string for the local role of updating attributes for DCT NFT tokens
+const DCTRoleNFTUpdateAttributes = "DCTRoleNFTUpdateAttributes"
 
 // DCTType defines the possible types in case of DCT tokens
 type DCTType uint32
@@ -170,3 +186,12 @@ const MinLenArgumentsDCTNFTTransfer = 4
 
 // MaxLenForDCTIssueMint defines the maximum length in bytes for the issued/minted balance
 const MaxLenForDCTIssueMint = 100
+
+// BaseOperationCostString represents the field name for base operation costs
+const BaseOperationCostString = "BaseOperationCost"
+
+// BuiltInCostString represents the field name for built in operation costs
+const BuiltInCostString = "BuiltInCost"
+
+// DCTSCAddress is the hard-coded address for dct issuing smart contract
+var DCTSCAddress = []byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 255, 255}
