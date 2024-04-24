@@ -5,7 +5,6 @@ import (
 
 	"github.com/numbatx/gn-core/data"
 	"github.com/numbatx/gn-core/data/vm"
-
 )
 
 // ApiTransactionResult is the data transfer object which will be returned on the get transaction by hash endpoint
@@ -68,7 +67,6 @@ type ApiSmartContractResult struct {
 	ReturnMessage  string      `json:"returnMessage,omitempty"`
 	OriginalSender string      `json:"originalSender,omitempty"`
 	Logs           *ApiLogs    `json:"logs,omitempty"`
-
 }
 
 // ApiReceipt represents a receipt with changed fields' types in order to make it friendly for API's json
