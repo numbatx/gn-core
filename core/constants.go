@@ -19,6 +19,7 @@ const FileModeUserReadWrite = 0600
 // for others
 const FileModeReadWrite = 0664
 
+
 // MetachainShardId will be used to identify a shard ID as metachain
 const MetachainShardId = uint32(0xFFFFFFFF)
 
@@ -75,6 +76,7 @@ const BuiltInFunctionDCTSetLimitedTransfer = "DCTSetLimitedTransfer"
 // for the token to be transferable only through accounts with transfer roles
 const BuiltInFunctionDCTUnSetLimitedTransfer = "DCTUnSetLimitedTransfer"
 
+
 // BuiltInFunctionDCTLocalMint is the key for the Dharitri Core Token (DCT) local mint built-in function
 const BuiltInFunctionDCTLocalMint = "DCTLocalMint"
 
@@ -105,6 +107,7 @@ const BuiltInFunctionDCTNFTUpdateAttributes = "DCTNFTUpdateAttributes"
 // BuiltInFunctionMultiDCTNFTTransfer is the key for the Dharitri Core Token (DCT) multi transfer built-in function
 const BuiltInFunctionMultiDCTNFTTransfer = "MultiDCTNFTTransfer"
 
+
 // DCTRoleLocalMint is the constant string for the local role of mint for DCT tokens
 const DCTRoleLocalMint = "DCTRoleLocalMint"
 
@@ -128,6 +131,7 @@ const DCTRoleNFTUpdateAttributes = "DCTRoleNFTUpdateAttributes"
 
 // DCTRoleTransfer is the constant string for the local role to transfer DCT, only for special tokens
 const DCTRoleTransfer = "DCTTransferRole"
+
 
 // DCTType defines the possible types in case of DCT tokens
 type DCTType uint32
@@ -215,3 +219,4 @@ const SCDeployIdentifier = "SCDeploy"
 
 // SCUpgradeIdentifier is the identifier for a smart contract upgrade
 const SCUpgradeIdentifier = "SCUpgrade"
+

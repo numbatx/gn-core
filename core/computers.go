@@ -177,6 +177,7 @@ func IsValidDCTRole(role string) bool {
 	switch role {
 	case DCTRoleNFTCreate, DCTRoleNFTAddQuantity, DCTRoleNFTBurn, DCTRoleLocalMint, DCTRoleLocalBurn, DCTRoleNFTUpdateAttributes,
 		DCTRoleNFTAddURI, DCTRoleTransfer:
+
 		return true
 	default:
 		return false
