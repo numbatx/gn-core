@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestFlag_Set(t *testing.T) {
+func TestFlag_SetReturningPrevious(t *testing.T) {
 	t.Parallel()
 
 	var flag Flag
