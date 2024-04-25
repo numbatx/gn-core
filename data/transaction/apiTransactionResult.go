@@ -5,7 +5,6 @@ import (
 
 	"github.com/numbatx/gn-core/data"
 	"github.com/numbatx/gn-core/data/vm"
-
 )
 
 // ApiTransactionResult is the data transfer object which will be returned on the get transaction by hash endpoint
@@ -46,29 +45,42 @@ type ApiTransactionResult struct {
 	SmartContractResults              []*ApiSmartContractResult `json:"smartContractResults,omitempty"`
 	Logs                              *ApiLogs                  `json:"logs,omitempty"`
 	Status                            TxStatus                  `json:"status,omitempty"`
+	Tokens                            []string                  `json:"tokens,omitempty"`
+	DCTValues                        []string                  `json:"dctValues,omitempty"`
+	Receivers                         []string                  `json:"receivers,omitempty"`
+	ReceiversShardIDs                 []uint32                  `json:"receiversShardIDs,omitempty"`
+	Operation                         string                    `json:"operation,omitempty"`
+	Function                          string                    `json:"function,omitempty"`
+	IsRelayed                         bool                      `json:"isRelayed,omitempty"`
 }
 
 // ApiSmartContractResult represents a smart contract result with changed fields' types in order to make it friendly for API's json
 type ApiSmartContractResult struct {
-	Hash           string      `json:"hash,omitempty"`
-	Nonce          uint64      `json:"nonce"`
-	Value          *big.Int    `json:"value"`
-	RcvAddr        string      `json:"receiver"`
-	SndAddr        string      `json:"sender"`
-	RelayerAddr    string      `json:"relayerAddress,omitempty"`
-	RelayedValue   *big.Int    `json:"relayedValue,omitempty"`
-	Code           string      `json:"code,omitempty"`
-	Data           string      `json:"data,omitempty"`
-	PrevTxHash     string      `json:"prevTxHash"`
-	OriginalTxHash string      `json:"originalTxHash"`
-	GasLimit       uint64      `json:"gasLimit"`
-	GasPrice       uint64      `json:"gasPrice"`
-	CallType       vm.CallType `json:"callType"`
-	CodeMetadata   string      `json:"codeMetadata,omitempty"`
-	ReturnMessage  string      `json:"returnMessage,omitempty"`
-	OriginalSender string      `json:"originalSender,omitempty"`
-	Logs           *ApiLogs    `json:"logs,omitempty"`
-
+	Hash              string      `json:"hash,omitempty"`
+	Nonce             uint64      `json:"nonce"`
+	Value             *big.Int    `json:"value"`
+	RcvAddr           string      `json:"receiver"`
+	SndAddr           string      `json:"sender"`
+	RelayerAddr       string      `json:"relayerAddress,omitempty"`
+	RelayedValue      *big.Int    `json:"relayedValue,omitempty"`
+	Code              string      `json:"code,omitempty"`
+	Data              string      `json:"data,omitempty"`
+	PrevTxHash        string      `json:"prevTxHash"`
+	OriginalTxHash    string      `json:"originalTxHash"`
+	GasLimit          uint64      `json:"gasLimit"`
+	GasPrice          uint64      `json:"gasPrice"`
+	CallType          vm.CallType `json:"callType"`
+	CodeMetadata      string      `json:"codeMetadata,omitempty"`
+	ReturnMessage     string      `json:"returnMessage,omitempty"`
+	OriginalSender    string      `json:"originalSender,omitempty"`
+	Logs              *ApiLogs    `json:"logs,omitempty"`
+	Tokens            []string    `json:"tokens,omitempty"`
+	DCTValues        []string    `json:"dctValues,omitempty"`
+	Receivers         []string    `json:"receivers,omitempty"`
+	ReceiversShardIDs []uint32    `json:"receiversShardIDs,omitempty"`
+	Operation         string      `json:"operation,omitempty"`
+	Function          string      `json:"function,omitempty"`
+	IsRelayed         bool        `json:"isRelayed,omitempty"`
 }
 
 // ApiReceipt represents a receipt with changed fields' types in order to make it friendly for API's json
