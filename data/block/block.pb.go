@@ -72,18 +72,21 @@ const (
 	Normal    ProcessingType = 0
 	Scheduled ProcessingType = 1
 	Processed ProcessingType = 2
+
 )
 
 var ProcessingType_name = map[int32]string{
 	0: "Normal",
 	1: "Scheduled",
 	2: "Processed",
+
 }
 
 var ProcessingType_value = map[string]int32{
 	"Normal":    0,
 	"Scheduled": 1,
 	"Processed": 2,
+
 }
 
 func (ProcessingType) EnumDescriptor() ([]byte, []int) {
@@ -110,6 +113,7 @@ var MiniBlockState_value = map[string]int32{
 func (MiniBlockState) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor_8e550b1f5926e92d, []int{2}
 }
+
 
 type MiniBlock struct {
 	TxHashes        [][]byte `protobuf:"bytes,1,rep,name=TxHashes,proto3" json:"TxHashes,omitempty"`
@@ -625,6 +629,7 @@ func init() {
 	proto.RegisterEnum("proto.Type", Type_name, Type_value)
 	proto.RegisterEnum("proto.ProcessingType", ProcessingType_name, ProcessingType_value)
 	proto.RegisterEnum("proto.MiniBlockState", MiniBlockState_name, MiniBlockState_value)
+
 	proto.RegisterType((*MiniBlock)(nil), "proto.MiniBlock")
 	proto.RegisterType((*MiniBlockHeader)(nil), "proto.MiniBlockHeader")
 	proto.RegisterType((*PeerChange)(nil), "proto.PeerChange")
@@ -696,6 +701,7 @@ var fileDescriptor_8e550b1f5926e92d = []byte{
 	0xec, 0x8f, 0x99, 0xcd, 0xfe, 0x9a, 0xd9, 0xa5, 0x77, 0x33, 0x9b, 0xfd, 0x70, 0x6b, 0x97, 0xae,
 	0x6e, 0xed, 0xd2, 0xf5, 0xad, 0x5d, 0x7a, 0x55, 0xa1, 0x7f, 0xe7, 0x41, 0x95, 0x6e, 0xe3, 0xa3,
 	0x7f, 0x02, 0x00, 0x00, 0xff, 0xff, 0x2b, 0x80, 0xde, 0x77, 0xad, 0x07, 0x00, 0x00,
+
 }
 
 func (x Type) String() string {
@@ -719,6 +725,7 @@ func (x MiniBlockState) String() string {
 	}
 	return strconv.Itoa(int(x))
 }
+
 func (this *MiniBlock) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil

@@ -12,6 +12,7 @@ import (
 	block "github.com/numbatx/gn-core/data/block"
 	smartContractResult "github.com/numbatx/gn-core/data/smartContractResult"
 	transaction "github.com/numbatx/gn-core/data/transaction"
+
 	io "io"
 	math "math"
 	math_big "math/big"
@@ -31,6 +32,7 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
+
 type GasAndFees struct {
 	AccumulatedFees *math_big.Int `protobuf:"bytes,1,opt,name=AccumulatedFees,proto3,casttypewith=math/big.Int;github.com/numbatx/gn-core/data.BigIntCaster" json:"AccumulatedFees,omitempty"`
 	DeveloperFees   *math_big.Int `protobuf:"bytes,2,opt,name=DeveloperFees,proto3,casttypewith=math/big.Int;github.com/numbatx/gn-core/data.BigIntCaster" json:"DeveloperFees,omitempty"`
@@ -43,6 +45,7 @@ func (m *GasAndFees) Reset()      { *m = GasAndFees{} }
 func (*GasAndFees) ProtoMessage() {}
 func (*GasAndFees) Descriptor() ([]byte, []int) {
 	return fileDescriptor_f80076f37bd30c16, []int{0}
+
 }
 func (m *GasAndFees) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -108,12 +111,14 @@ type ScheduledSCRs struct {
 	InvalidTransactions []*transaction.Transaction                 `protobuf:"bytes,3,rep,name=invalidTransactions,proto3" json:"invalidTransactions,omitempty"`
 	ScheduledMiniBlocks []*block.MiniBlock                         `protobuf:"bytes,4,rep,name=scheduledMiniBlocks,proto3" json:"scheduledMiniBlocks,omitempty"`
 	GasAndFees          *GasAndFees                                `protobuf:"bytes,5,opt,name=gasAndFees,proto3" json:"gasAndFees,omitempty"`
+
 }
 
 func (m *ScheduledSCRs) Reset()      { *m = ScheduledSCRs{} }
 func (*ScheduledSCRs) ProtoMessage() {}
 func (*ScheduledSCRs) Descriptor() ([]byte, []int) {
 	return fileDescriptor_f80076f37bd30c16, []int{1}
+
 }
 func (m *ScheduledSCRs) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -146,6 +151,7 @@ func (m *ScheduledSCRs) GetRootHash() []byte {
 }
 
 func (m *ScheduledSCRs) GetScrs() []*smartContractResult.SmartContractResult {
+
 	if m != nil {
 		return m.Scrs
 	}
@@ -166,6 +172,7 @@ func (m *ScheduledSCRs) GetScheduledMiniBlocks() []*block.MiniBlock {
 	return nil
 }
 
+
 func (m *ScheduledSCRs) GetGasAndFees() *GasAndFees {
 	if m != nil {
 		return m.GasAndFees
@@ -176,6 +183,7 @@ func (m *ScheduledSCRs) GetGasAndFees() *GasAndFees {
 func init() {
 	proto.RegisterType((*GasAndFees)(nil), "proto.GasAndFees")
 	proto.RegisterType((*ScheduledSCRs)(nil), "proto.ScheduledSCRs")
+
 }
 
 func init() { proto.RegisterFile("scheduled.proto", fileDescriptor_f80076f37bd30c16) }
@@ -214,6 +222,7 @@ var fileDescriptor_f80076f37bd30c16 = []byte{
 	0x17, 0xf1, 0xe2, 0x6f, 0x00, 0x00, 0x00, 0xff, 0xff, 0x14, 0xe8, 0xe4, 0x60, 0xb5, 0x03, 0x00,
 	0x00,
 }
+
 
 func (this *GasAndFees) Equal(that interface{}) bool {
 	if that == nil {
@@ -300,6 +309,7 @@ func (this *ScheduledSCRs) Equal(that interface{}) bool {
 	}
 	for i := range this.ScheduledMiniBlocks {
 		if !this.ScheduledMiniBlocks[i].Equal(that1.ScheduledMiniBlocks[i]) {
+
 			return false
 		}
 	}
@@ -308,6 +318,7 @@ func (this *ScheduledSCRs) Equal(that interface{}) bool {
 	}
 	return true
 }
+
 func (this *GasAndFees) GoString() string {
 	if this == nil {
 		return "nil"
@@ -337,6 +348,7 @@ func (this *ScheduledSCRs) GoString() string {
 	}
 	if this.ScheduledMiniBlocks != nil {
 		s = append(s, "ScheduledMiniBlocks: "+fmt.Sprintf("%#v", this.ScheduledMiniBlocks)+",\n")
+
 	}
 	if this.GasAndFees != nil {
 		s = append(s, "GasAndFees: "+fmt.Sprintf("%#v", this.GasAndFees)+",\n")
@@ -352,6 +364,7 @@ func valueToGoStringScheduled(v interface{}, typ string) string {
 	pv := reflect.Indirect(rv).Interface()
 	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
 }
+
 func (m *GasAndFees) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -462,6 +475,7 @@ func (m *ScheduledSCRs) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		for iNdEx := len(m.InvalidTransactions) - 1; iNdEx >= 0; iNdEx-- {
 			{
 				size, err := m.InvalidTransactions[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+
 				if err != nil {
 					return 0, err
 				}
@@ -482,6 +496,7 @@ func (m *ScheduledSCRs) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 				i -= size
 				i = encodeVarintScheduled(dAtA, i, uint64(size))
 			}
+
 			i--
 			dAtA[i] = 0x12
 		}
@@ -507,6 +522,7 @@ func encodeVarintScheduled(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
+
 func (m *GasAndFees) Size() (n int) {
 	if m == nil {
 		return 0
@@ -561,6 +577,7 @@ func (m *ScheduledSCRs) Size() (n int) {
 		for _, e := range m.ScheduledMiniBlocks {
 			l = e.Size()
 			n += 1 + l + sovScheduled(uint64(l))
+
 		}
 	}
 	if m.GasAndFees != nil {
@@ -576,6 +593,7 @@ func sovScheduled(x uint64) (n int) {
 func sozScheduled(x uint64) (n int) {
 	return sovScheduled(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
+
 func (this *GasAndFees) String() string {
 	if this == nil {
 		return "nil"
@@ -614,6 +632,7 @@ func (this *ScheduledSCRs) String() string {
 		`Scrs:` + repeatedStringForScrs + `,`,
 		`InvalidTransactions:` + repeatedStringForInvalidTransactions + `,`,
 		`ScheduledMiniBlocks:` + repeatedStringForScheduledMiniBlocks + `,`,
+
 		`GasAndFees:` + strings.Replace(this.GasAndFees.String(), "GasAndFees", "GasAndFees", 1) + `,`,
 		`}`,
 	}, "")
@@ -627,6 +646,7 @@ func valueToStringScheduled(v interface{}) string {
 	pv := reflect.Indirect(rv).Interface()
 	return fmt.Sprintf("*%v", pv)
 }
+
 func (m *GasAndFees) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -976,6 +996,7 @@ func (m *ScheduledSCRs) Unmarshal(dAtA []byte) error {
 			}
 			iNdEx = postIndex
 		case 5:
+
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field GasAndFees", wireType)
 			}

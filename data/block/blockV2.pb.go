@@ -214,6 +214,7 @@ func init() {
 	proto.RegisterType((*HeaderV2)(nil), "proto.HeaderV2")
 	proto.RegisterType((*MiniBlockReserved)(nil), "proto.MiniBlockReserved")
 	proto.RegisterType((*MiniBlockHeaderReserved)(nil), "proto.MiniBlockHeaderReserved")
+
 }
 
 func init() { proto.RegisterFile("blockV2.proto", fileDescriptor_17a3844aa051366e) }
@@ -250,6 +251,7 @@ var fileDescriptor_17a3844aa051366e = []byte{
 	0xf4, 0xb3, 0x20, 0xe8, 0x57, 0x41, 0x9c, 0xd3, 0x82, 0xa0, 0x2f, 0x33, 0xe2, 0x8c, 0x67, 0xc4,
 	0x99, 0xcc, 0x88, 0xf3, 0xae, 0x61, 0x7f, 0x9e, 0xb8, 0x69, 0xb7, 0x3f, 0xfa, 0x13, 0x00, 0x00,
 	0xff, 0xff, 0x70, 0xaf, 0x8b, 0x94, 0x91, 0x03, 0x00, 0x00,
+
 }
 
 func (this *HeaderV2) Equal(that interface{}) bool {
@@ -354,6 +356,7 @@ func (this *MiniBlockHeaderReserved) Equal(that interface{}) bool {
 	}
 	return true
 }
+
 func (this *HeaderV2) GoString() string {
 	if this == nil {
 		return "nil"
@@ -394,6 +397,7 @@ func (this *MiniBlockHeaderReserved) GoString() string {
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
+
 func valueToGoStringBlockV2(v interface{}, typ string) string {
 	rv := reflect.ValueOf(v)
 	if rv.IsNil() {
@@ -549,6 +553,7 @@ func (m *MiniBlockHeaderReserved) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	return len(dAtA) - i, nil
 }
 
+
 func encodeVarintBlockV2(dAtA []byte, offset int, v uint64) int {
 	offset -= sovBlockV2(v)
 	base := offset
@@ -627,6 +632,7 @@ func (m *MiniBlockHeaderReserved) Size() (n int) {
 	return n
 }
 
+=
 func sovBlockV2(x uint64) (n int) {
 	return (math_bits.Len64(x|1) + 6) / 7
 }
@@ -671,6 +677,7 @@ func (this *MiniBlockHeaderReserved) String() string {
 	}, "")
 	return s
 }
+
 func valueToStringBlockV2(v interface{}) string {
 	rv := reflect.ValueOf(v)
 	if rv.IsNil() {
@@ -1123,6 +1130,7 @@ func (m *MiniBlockHeaderReserved) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func skipBlockV2(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0

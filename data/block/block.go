@@ -327,6 +327,7 @@ func (h *Header) SetMiniBlockHeaderHandlers(mbHeaderHandlers []data.MiniBlockHea
 	}
 
 	miniBlockHeaders := make([]MiniBlockHeader, len(mbHeaderHandlers))
+
 	for i, mbHeaderHandler := range mbHeaderHandlers {
 		mbHeader, ok := mbHeaderHandler.(*MiniBlockHeader)
 		if !ok {
@@ -436,6 +437,9 @@ func (mb *MiniBlock) Clone() *MiniBlock {
 		newMb.Reserved = make([]byte, len(mb.Reserved))
 		copy(newMb.Reserved, mb.Reserved)
 	}
+
+	newMb.Reserved = make([]byte, len(mb.Reserved))
+	copy(newMb.Reserved, mb.Reserved)
 
 	return newMb
 }

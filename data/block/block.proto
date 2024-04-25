@@ -50,12 +50,14 @@ message MiniBlockHeader  {
   uint32 TxCount = 4;
   Type   Type = 5;
   bytes  Reserved = 6;
+
 }
 
 // PeerChange holds a change in one peer to shard assignation
 message PeerChange {
   bytes  PubKey = 1;
   uint32 ShardIdDest = 2;
+
 }
 
 // Header holds the metadata of a block. This is the part that is being hashed and run through consensus.
@@ -89,10 +91,12 @@ message Header  {
 
 message Body {
   repeated MiniBlock MiniBlocks = 1;
+
 }
 
 // BodyHeaderPair holds a body and header hash pair
 message BodyHeaderPair{
   bytes Body = 1;
   bytes Header = 2;
+
 }

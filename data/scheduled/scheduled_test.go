@@ -8,6 +8,7 @@ import (
 	"github.com/numbatx/gn-core/data/scheduled"
 	"github.com/numbatx/gn-core/data/smartContractResult"
 	"github.com/numbatx/gn-core/data/transaction"
+
 	"github.com/stretchr/testify/require"
 )
 
@@ -21,6 +22,7 @@ func TestScheduledSCRs_GetTransactionHandlersMapNilSCRsList(t *testing.T) {
 
 	expectedTxHandlersMap := createInitializedTransactionHandlerMap(nb)
 	expectedTxHandlersMap[block.SmartContractResultBlock] = nil
+
 	txHandlersMap := scheduledSCRs.GetTransactionHandlersMap()
 	require.NotNil(t, txHandlersMap)
 	require.Equal(t, expectedTxHandlersMap, txHandlersMap)
@@ -31,6 +33,7 @@ func TestScheduledSCRs_GetTransactionHandlersMapNilSCRsMap(t *testing.T) {
 		RootHash:            []byte("root hash"),
 		Scrs:                nil,
 		InvalidTransactions: nil,
+
 	}
 
 	txHandlersMap := scheduledSCRs.GetTransactionHandlersMap()
@@ -61,6 +64,7 @@ func TestScheduledSCRs_GetTransactionHandlersMapOK(t *testing.T) {
 	}
 
 	expectedTxHandlersMap := createInitializedTransactionHandlerMap(nb)
+
 	txHandlersMap := scheduledSCRs.GetTransactionHandlersMap()
 	require.NotNil(t, txHandlersMap)
 	require.Equal(t, expectedTxHandlersMap, txHandlersMap)
@@ -93,6 +97,7 @@ func TestScheduledSCRs_SetTransactionHandlersMapNilSCRsList(t *testing.T) {
 	txHandlersMap := createInitializedTransactionHandlerMap(nb)
 	txHandlersMap[block.SmartContractResultBlock] = nil
 
+
 	err := scheduledSCRs.SetTransactionHandlersMap(txHandlersMap)
 	require.Nil(t, err)
 	require.Equal(t, scheduledSCRs, expectedScheduledSCRs)
@@ -112,6 +117,7 @@ func TestScheduledSCRs_SetTransactionHandlersMapOK(t *testing.T) {
 	err := scheduledSCRs.SetTransactionHandlersMap(expectedTxHandlersMap)
 	require.Nil(t, err)
 	actualTxHandlersMap := scheduledSCRs.GetTransactionHandlersMap()
+
 
 	require.NotNil(t, actualTxHandlersMap)
 	require.Equal(t, actualTxHandlersMap, expectedTxHandlersMap)
@@ -164,6 +170,7 @@ func createInitializedTransactionHandlerMap(nbTxsPerIndex int) map[block.Type][]
 	result[block.InvalidBlock] = createInitializedInvalidTxsAsTransactionHandlerArray(nbTxsPerIndex)
 	result[block.SmartContractResultBlock] = createInitializedSCRsAsTransactionHandlerArray(nbTxsPerIndex)
 
+
 	return result
 }
 
@@ -172,6 +179,7 @@ func createInitializedSCRsAsTransactionHandlerArray(nbTxs int) []data.Transactio
 	scrs := createInitializedSCRPointerArray(nbTxs)
 	for i := range scrs {
 		result[i] = scrs[i]
+
 	}
 
 	return result
@@ -206,3 +214,4 @@ func createInitializedInvalidTxsPointerArray(nbInvalidTxs int) []*transaction.Tr
 	}
 	return result
 }
+
