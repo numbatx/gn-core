@@ -219,6 +219,7 @@ func TestHeader_SetRound(t *testing.T) {
 
 	assert.Nil(t, err)
 	assert.Equal(t, round, h.GetRound())
+
 }
 
 func TestHeader_SetSignature(t *testing.T) {
@@ -714,6 +715,7 @@ func TestMiniBlock_GetTxsTypeFromMiniBlock(t *testing.T) {
 	assert.Equal(t, block.SmartContractResultBlock, txTypes[1])
 }
 
+
 func TestHeader_SetScheduledRootHash(t *testing.T) {
 	t.Parallel()
 
@@ -786,6 +788,7 @@ func TestMiniBlockHeader_IsFinal(t *testing.T) {
 		ExecutionType: block.Scheduled,
 		State:         block.Proposed,
 	}
+
 	_ = mbh.SetMiniBlockHeaderReserved(mbhr)
 	isFinal = mbh.IsFinal()
 	assert.False(t, isFinal)
@@ -806,3 +809,4 @@ func TestHeader_GetAdditionalData(t *testing.T) {
 	additionalData := h.GetAdditionalData()
 	assert.Nil(t, additionalData)
 }
+

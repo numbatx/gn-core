@@ -1,3 +1,4 @@
+
 syntax = "proto3";
 
 package proto;
@@ -24,4 +25,5 @@ message ScheduledSCRs {
   repeated Transaction invalidTransactions = 3;
   repeated MiniBlock scheduledMiniBlocks = 4;
   GasAndFees gasAndFees = 5;
+
 }

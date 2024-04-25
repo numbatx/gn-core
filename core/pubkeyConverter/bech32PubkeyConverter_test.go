@@ -69,7 +69,7 @@ func TestBech32PubkeyConverter_DecodeWrongSizeShouldErr(t *testing.T) {
 	addressLen := 32
 	bpc, _ := pubkeyConverter.NewBech32PubkeyConverter(addressLen, &mock.LoggerMock{})
 
-	str, err := bpc.Decode("moa1xyerxdp4xcmnswfsxyeqz6mtmk")
+	str, err := bpc.Decode("moa1xyerxdp4xcmnswfsxyeqqzq40r")
 
 	assert.Equal(t, 0, len(str))
 	assert.True(t, errors.Is(err, pubkeyConverter.ErrWrongSize))

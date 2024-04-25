@@ -42,6 +42,7 @@ type HeaderGasConsumption struct {
 	GasRefunded    uint64
 	GasPenalized   uint64
 	MaxGasPerBlock uint64
+
 }
 
 // Pool will holds all types of transaction

@@ -120,6 +120,7 @@ type MiniBlockHeaderHandler interface {
 	GetConstructionState() int32
 	IsFinal() bool
 
+
 	SetHash(hash []byte) error
 	SetSenderShardID(shardID uint32) error
 	SetReceiverShardID(shardID uint32) error
@@ -128,6 +129,7 @@ type MiniBlockHeaderHandler interface {
 	SetReserved(reserved []byte) error
 	SetProcessingType(procType int32) error
 	SetConstructionState(state int32) error
+
 	ShallowClone() MiniBlockHeaderHandler
 }
 
@@ -199,6 +201,7 @@ type EpochStartShardDataHandler interface {
 }
 
 // EconomicsHandler defines setters and getters for Economics
+
 type EconomicsHandler interface {
 	GetTotalSupply() *big.Int
 	GetTotalToDistribute() *big.Int
