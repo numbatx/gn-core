@@ -8,9 +8,11 @@ import (
 	fmt "fmt"
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/gogo/protobuf/proto"
-	github_com_gogo_protobuf_sortkeys "github.com/gogo/protobuf/sortkeys"
 	github_com_numbatx_gn_core_data "github.com/numbatx/gn-core/data"
+	block "github.com/numbatx/gn-core/data/block"
 	smartContractResult "github.com/numbatx/gn-core/data/smartContractResult"
+	transaction "github.com/numbatx/gn-core/data/transaction"
+
 	io "io"
 	math "math"
 	math_big "math/big"
@@ -30,44 +32,6 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
-type SmartContractResults struct {
-	TxHandlers []*smartContractResult.SmartContractResult `protobuf:"bytes,1,rep,name=TxHandlers,proto3" json:"TxHandlers,omitempty"`
-}
-
-func (m *SmartContractResults) Reset()      { *m = SmartContractResults{} }
-func (*SmartContractResults) ProtoMessage() {}
-func (*SmartContractResults) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f80076f37bd30c16, []int{0}
-}
-func (m *SmartContractResults) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *SmartContractResults) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	b = b[:cap(b)]
-	n, err := m.MarshalToSizedBuffer(b)
-	if err != nil {
-		return nil, err
-	}
-	return b[:n], nil
-}
-func (m *SmartContractResults) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_SmartContractResults.Merge(m, src)
-}
-func (m *SmartContractResults) XXX_Size() int {
-	return m.Size()
-}
-func (m *SmartContractResults) XXX_DiscardUnknown() {
-	xxx_messageInfo_SmartContractResults.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_SmartContractResults proto.InternalMessageInfo
-
-func (m *SmartContractResults) GetTxHandlers() []*smartContractResult.SmartContractResult {
-	if m != nil {
-		return m.TxHandlers
-	}
-	return nil
-}
 
 type GasAndFees struct {
 	AccumulatedFees *math_big.Int `protobuf:"bytes,1,opt,name=AccumulatedFees,proto3,casttypewith=math/big.Int;github.com/numbatx/gn-core/data.BigIntCaster" json:"AccumulatedFees,omitempty"`
@@ -80,7 +44,8 @@ type GasAndFees struct {
 func (m *GasAndFees) Reset()      { *m = GasAndFees{} }
 func (*GasAndFees) ProtoMessage() {}
 func (*GasAndFees) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f80076f37bd30c16, []int{1}
+	return fileDescriptor_f80076f37bd30c16, []int{0}
+
 }
 func (m *GasAndFees) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -141,15 +106,19 @@ func (m *GasAndFees) GetGasRefunded() uint64 {
 }
 
 type ScheduledSCRs struct {
-	RootHash   []byte                         `protobuf:"bytes,1,opt,name=rootHash,proto3" json:"rootHash,omitempty"`
-	Scrs       map[int32]SmartContractResults `protobuf:"bytes,2,rep,name=scrs,proto3" json:"scrs" protobuf_key:"varint,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
-	GasAndFees *GasAndFees                    `protobuf:"bytes,3,opt,name=gasAndFees,proto3" json:"gasAndFees,omitempty"`
+	RootHash            []byte                                     `protobuf:"bytes,1,opt,name=rootHash,proto3" json:"rootHash,omitempty"`
+	Scrs                []*smartContractResult.SmartContractResult `protobuf:"bytes,2,rep,name=scrs,proto3" json:"scrs,omitempty"`
+	InvalidTransactions []*transaction.Transaction                 `protobuf:"bytes,3,rep,name=invalidTransactions,proto3" json:"invalidTransactions,omitempty"`
+	ScheduledMiniBlocks []*block.MiniBlock                         `protobuf:"bytes,4,rep,name=scheduledMiniBlocks,proto3" json:"scheduledMiniBlocks,omitempty"`
+	GasAndFees          *GasAndFees                                `protobuf:"bytes,5,opt,name=gasAndFees,proto3" json:"gasAndFees,omitempty"`
+
 }
 
 func (m *ScheduledSCRs) Reset()      { *m = ScheduledSCRs{} }
 func (*ScheduledSCRs) ProtoMessage() {}
 func (*ScheduledSCRs) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f80076f37bd30c16, []int{2}
+	return fileDescriptor_f80076f37bd30c16, []int{1}
+
 }
 func (m *ScheduledSCRs) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -181,12 +150,28 @@ func (m *ScheduledSCRs) GetRootHash() []byte {
 	return nil
 }
 
-func (m *ScheduledSCRs) GetScrs() map[int32]SmartContractResults {
+func (m *ScheduledSCRs) GetScrs() []*smartContractResult.SmartContractResult {
+
 	if m != nil {
 		return m.Scrs
 	}
 	return nil
 }
+
+func (m *ScheduledSCRs) GetInvalidTransactions() []*transaction.Transaction {
+	if m != nil {
+		return m.InvalidTransactions
+	}
+	return nil
+}
+
+func (m *ScheduledSCRs) GetScheduledMiniBlocks() []*block.MiniBlock {
+	if m != nil {
+		return m.ScheduledMiniBlocks
+	}
+	return nil
+}
+
 
 func (m *ScheduledSCRs) GetGasAndFees() *GasAndFees {
 	if m != nil {
@@ -196,78 +181,49 @@ func (m *ScheduledSCRs) GetGasAndFees() *GasAndFees {
 }
 
 func init() {
-	proto.RegisterType((*SmartContractResults)(nil), "proto.SmartContractResults")
 	proto.RegisterType((*GasAndFees)(nil), "proto.GasAndFees")
 	proto.RegisterType((*ScheduledSCRs)(nil), "proto.ScheduledSCRs")
-	proto.RegisterMapType((map[int32]SmartContractResults)(nil), "proto.ScheduledSCRs.ScrsEntry")
+
 }
 
 func init() { proto.RegisterFile("scheduled.proto", fileDescriptor_f80076f37bd30c16) }
 
 var fileDescriptor_f80076f37bd30c16 = []byte{
-	// 494 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x53, 0x3f, 0x6f, 0xd3, 0x4e,
-	0x18, 0xf6, 0xe5, 0xcf, 0x4f, 0xbf, 0x5e, 0x5a, 0x15, 0x4e, 0x0c, 0x91, 0x91, 0xae, 0x51, 0xa6,
-	0x2c, 0xb5, 0xd5, 0xb0, 0x94, 0x22, 0x86, 0x26, 0x40, 0xdb, 0x01, 0x09, 0x5d, 0x3a, 0xb1, 0x9d,
-	0xed, 0xab, 0x63, 0x61, 0xdf, 0x55, 0xf7, 0x27, 0x6a, 0x99, 0xf8, 0x08, 0x7c, 0x0c, 0xc4, 0xc7,
-	0x60, 0xea, 0x98, 0x31, 0x13, 0x10, 0x67, 0x61, 0x42, 0xfd, 0x08, 0xc8, 0xe7, 0xc6, 0xb8, 0x50,
-	0xc4, 0xc2, 0xe4, 0x7b, 0x1f, 0x3f, 0xcf, 0xf3, 0xfa, 0xbd, 0xe7, 0x35, 0xdc, 0x56, 0xe1, 0x94,
-	0x45, 0x26, 0x65, 0x91, 0x77, 0x2e, 0x85, 0x16, 0xa8, 0x6d, 0x1f, 0xee, 0x6e, 0x9c, 0xe8, 0xa9,
-	0x09, 0xbc, 0x50, 0x64, 0x7e, 0x2c, 0x62, 0xe1, 0x5b, 0x38, 0x30, 0x67, 0xb6, 0xb2, 0x85, 0x3d,
-	0x95, 0x2a, 0xf7, 0x65, 0x8d, 0xce, 0x4d, 0x16, 0x50, 0x7d, 0xe1, 0xc7, 0x7c, 0x37, 0x14, 0x92,
-	0xf9, 0x11, 0xd5, 0xd4, 0x57, 0x19, 0x95, 0x7a, 0x2c, 0xb8, 0x96, 0x34, 0xd4, 0x84, 0x29, 0x93,
-	0xea, 0xbb, 0xb0, 0xd2, 0xae, 0x4f, 0xe0, 0x83, 0xc9, 0xef, 0x2f, 0x15, 0x3a, 0x80, 0xf0, 0xf4,
-	0xe2, 0x98, 0xf2, 0x28, 0x65, 0x52, 0x75, 0x41, 0xaf, 0x39, 0xe8, 0x0c, 0xdd, 0x52, 0xe3, 0xdd,
-	0x21, 0x20, 0x35, 0x76, 0xff, 0x53, 0x03, 0xc2, 0x23, 0xaa, 0x0e, 0x79, 0xf4, 0x82, 0x31, 0x85,
-	0x62, 0xb8, 0x7d, 0x18, 0x86, 0x26, 0x33, 0x29, 0xd5, 0xcc, 0x42, 0x5d, 0xd0, 0x03, 0x83, 0xcd,
-	0xd1, 0xd3, 0x8f, 0x5f, 0x76, 0x1e, 0x67, 0x54, 0x4f, 0xfd, 0x20, 0x89, 0xbd, 0x13, 0xae, 0x9f,
-	0xfc, 0x65, 0x36, 0x6f, 0x94, 0xc4, 0x27, 0x5c, 0x8f, 0xa9, 0xd2, 0x4c, 0x92, 0x5f, 0x5d, 0x51,
-	0x08, 0xb7, 0x9e, 0xb1, 0x19, 0x4b, 0xc5, 0x39, 0x93, 0xb6, 0x4d, 0xe3, 0x5f, 0xb4, 0xb9, 0xed,
-	0x89, 0x7a, 0xb0, 0x73, 0x44, 0xd5, 0x2b, 0x29, 0x66, 0x49, 0xc4, 0xa2, 0x6e, 0xb3, 0x07, 0x06,
-	0x2d, 0x52, 0x87, 0x50, 0x1f, 0x6e, 0x16, 0x25, 0xe3, 0x34, 0x4d, 0xde, 0xb2, 0xa8, 0xdb, 0xb2,
-	0x94, 0x5b, 0xd8, 0x8d, 0x0b, 0x61, 0x67, 0x86, 0x17, 0x2e, 0xed, 0xca, 0x65, 0x0d, 0xf5, 0xbf,
-	0x03, 0xb8, 0x35, 0x59, 0x6f, 0xcc, 0x64, 0x4c, 0x14, 0x72, 0xe1, 0xff, 0x52, 0x08, 0x7d, 0x4c,
-	0xd5, 0xb4, 0xbc, 0x40, 0x52, 0xd5, 0x68, 0x1f, 0xb6, 0x54, 0x28, 0x8b, 0x89, 0x8b, 0xa0, 0xf0,
-	0x3a, 0xa8, 0xba, 0xde, 0x9b, 0x84, 0x52, 0x3d, 0xe7, 0x5a, 0x5e, 0x8e, 0x5a, 0x57, 0x9f, 0x77,
-	0x1c, 0x62, 0x15, 0x68, 0x0f, 0xc2, 0xb8, 0xca, 0xca, 0x8e, 0xd3, 0x19, 0xde, 0xbf, 0xd1, 0xff,
-	0x0c, 0x91, 0xd4, 0x48, 0xee, 0x29, 0xdc, 0xa8, 0xbc, 0xd0, 0x3d, 0xd8, 0x7c, 0xc3, 0x2e, 0xed,
-	0x07, 0xb5, 0x49, 0x71, 0x44, 0x7b, 0xb0, 0x3d, 0xa3, 0xa9, 0x61, 0xf6, 0xfa, 0x3b, 0xc3, 0x87,
-	0x7f, 0xde, 0x1a, 0x45, 0x4a, 0xe6, 0x41, 0x63, 0x1f, 0x8c, 0xc6, 0xf3, 0x25, 0x76, 0x16, 0x4b,
-	0xec, 0x5c, 0x2f, 0x31, 0x78, 0x97, 0x63, 0xf0, 0x21, 0xc7, 0xe0, 0x2a, 0xc7, 0x60, 0x9e, 0x63,
-	0xb0, 0xc8, 0x31, 0xf8, 0x9a, 0x63, 0xf0, 0x2d, 0xc7, 0xce, 0x75, 0x8e, 0xc1, 0xfb, 0x15, 0x76,
-	0xe6, 0x2b, 0xec, 0x2c, 0x56, 0xd8, 0x79, 0xbd, 0x51, 0xfd, 0x59, 0xc1, 0x7f, 0xb6, 0xd7, 0xa3,
-	0x1f, 0x01, 0x00, 0x00, 0xff, 0xff, 0xed, 0xe4, 0xd4, 0x82, 0x6d, 0x03, 0x00, 0x00,
+	// 481 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x52, 0xbf, 0x72, 0xd3, 0x30,
+	0x1c, 0xb6, 0x92, 0x94, 0x03, 0xa5, 0xbd, 0x82, 0xba, 0xe4, 0x32, 0x88, 0x5c, 0xa6, 0x2c, 0xb5,
+	0xaf, 0x65, 0xe2, 0xb8, 0x0e, 0x75, 0x7a, 0x94, 0x0e, 0xbd, 0xe3, 0x14, 0x26, 0x36, 0x59, 0x56,
+	0x1d, 0x1d, 0xb6, 0xd4, 0x93, 0xe4, 0x1c, 0xc7, 0xc4, 0x23, 0x30, 0xf2, 0x08, 0x1c, 0x8f, 0xc1,
+	0xc4, 0x98, 0x31, 0x1b, 0xc4, 0x59, 0x18, 0xfb, 0x08, 0x5c, 0x64, 0xd7, 0x75, 0x21, 0x77, 0x59,
+	0xba, 0xd8, 0xfa, 0x7d, 0xfa, 0xfe, 0xd8, 0xd2, 0x07, 0xf7, 0x0d, 0x9b, 0xf2, 0x38, 0x4f, 0x79,
+	0xec, 0x5f, 0x6b, 0x65, 0x15, 0xda, 0x71, 0xaf, 0xfe, 0x61, 0x22, 0xec, 0x34, 0x8f, 0x7c, 0xa6,
+	0xb2, 0x20, 0x51, 0x89, 0x0a, 0x1c, 0x1c, 0xe5, 0x57, 0x6e, 0x72, 0x83, 0x5b, 0x95, 0xaa, 0xfe,
+	0x65, 0x83, 0x2e, 0xf3, 0x2c, 0xa2, 0xf6, 0x63, 0x90, 0xc8, 0x43, 0xa6, 0x34, 0x0f, 0x62, 0x6a,
+	0x69, 0x60, 0x32, 0xaa, 0xed, 0x58, 0x49, 0xab, 0x29, 0xb3, 0x84, 0x9b, 0x3c, 0xb5, 0x9b, 0xb0,
+	0xca, 0xee, 0x68, 0x9b, 0x5d, 0x94, 0x2a, 0xf6, 0xa1, 0x7c, 0x56, 0x92, 0x93, 0x6d, 0x12, 0xab,
+	0xa9, 0x34, 0x94, 0x59, 0xa1, 0x64, 0x73, 0x5d, 0xca, 0x87, 0x3f, 0x5a, 0x10, 0x9e, 0x53, 0x73,
+	0x2a, 0xe3, 0xd7, 0x9c, 0x1b, 0x94, 0xc0, 0xfd, 0x53, 0xc6, 0xf2, 0x2c, 0x4f, 0xa9, 0xe5, 0x0e,
+	0xea, 0x81, 0x01, 0x18, 0xed, 0x86, 0x27, 0xdf, 0x7f, 0x3d, 0x7f, 0x99, 0x51, 0x3b, 0x0d, 0x22,
+	0x91, 0xf8, 0x17, 0xd2, 0xbe, 0xda, 0x92, 0xeb, 0x87, 0x22, 0xb9, 0x90, 0x76, 0x4c, 0x8d, 0xe5,
+	0x9a, 0xfc, 0xeb, 0x8a, 0x18, 0xdc, 0x3b, 0xe3, 0x33, 0x9e, 0xaa, 0x6b, 0xae, 0x5d, 0x4c, 0xeb,
+	0x21, 0x62, 0xee, 0x7b, 0xa2, 0x01, 0xec, 0x9e, 0x53, 0xf3, 0x56, 0xab, 0x99, 0x88, 0x79, 0xdc,
+	0x6b, 0x0f, 0xc0, 0xa8, 0x43, 0x9a, 0x10, 0x1a, 0xc2, 0xdd, 0xf5, 0xc8, 0x25, 0x4d, 0xc5, 0x27,
+	0x1e, 0xf7, 0x3a, 0x8e, 0x72, 0x0f, 0xab, 0x5c, 0x08, 0xbf, 0xca, 0xe5, 0xda, 0x65, 0xa7, 0x76,
+	0xb9, 0x85, 0x86, 0x5f, 0x5b, 0x70, 0x6f, 0x72, 0xdb, 0xa7, 0xc9, 0x98, 0x18, 0xd4, 0x87, 0x8f,
+	0xb5, 0x52, 0xf6, 0x0d, 0x35, 0xd3, 0xf2, 0x00, 0x49, 0x3d, 0x23, 0x1f, 0x76, 0x0c, 0xd3, 0xeb,
+	0x3f, 0x6e, 0x8f, 0xba, 0xc7, 0xfd, 0xf2, 0x22, 0xfc, 0xc9, 0xff, 0xa5, 0x20, 0x8e, 0x87, 0xce,
+	0xe0, 0x81, 0x90, 0x33, 0x9a, 0x8a, 0xf8, 0xdd, 0xdd, 0xf5, 0x99, 0x5e, 0xdb, 0xc9, 0x51, 0x25,
+	0x6f, 0x6c, 0x91, 0x4d, 0x74, 0x14, 0xc2, 0x83, 0xba, 0xf2, 0x97, 0x42, 0x8a, 0x70, 0xdd, 0x21,
+	0xd3, 0xeb, 0x38, 0x97, 0xa7, 0x95, 0x4b, 0xbd, 0x41, 0x36, 0x91, 0xd1, 0x11, 0x84, 0x49, 0xdd,
+	0x15, 0x77, 0x10, 0xdd, 0xe3, 0x67, 0x95, 0xf4, 0xae, 0x44, 0xa4, 0x41, 0x0a, 0xc7, 0xf3, 0x25,
+	0xf6, 0x16, 0x4b, 0xec, 0xdd, 0x2c, 0x31, 0xf8, 0x5c, 0x60, 0xf0, 0xad, 0xc0, 0xe0, 0x67, 0x81,
+	0xc1, 0xbc, 0xc0, 0x60, 0x51, 0x60, 0xf0, 0xbb, 0xc0, 0xe0, 0x4f, 0x81, 0xbd, 0x9b, 0x02, 0x83,
+	0x2f, 0x2b, 0xec, 0xcd, 0x57, 0xd8, 0x5b, 0xac, 0xb0, 0xf7, 0xfe, 0x49, 0xfd, 0x05, 0xd1, 0x23,
+	0x17, 0xf1, 0xe2, 0x6f, 0x00, 0x00, 0x00, 0xff, 0xff, 0x14, 0xe8, 0xe4, 0x60, 0xb5, 0x03, 0x00,
+	0x00,
 }
 
-func (this *SmartContractResults) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
 
-	that1, ok := that.(*SmartContractResults)
-	if !ok {
-		that2, ok := that.(SmartContractResults)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if len(this.TxHandlers) != len(that1.TxHandlers) {
-		return false
-	}
-	for i := range this.TxHandlers {
-		if !this.TxHandlers[i].Equal(that1.TxHandlers[i]) {
-			return false
-		}
-	}
-	return true
-}
 func (this *GasAndFees) Equal(that interface{}) bool {
 	if that == nil {
 		return this == nil
@@ -336,9 +292,24 @@ func (this *ScheduledSCRs) Equal(that interface{}) bool {
 		return false
 	}
 	for i := range this.Scrs {
-		a := this.Scrs[i]
-		b := that1.Scrs[i]
-		if !(&a).Equal(&b) {
+		if !this.Scrs[i].Equal(that1.Scrs[i]) {
+			return false
+		}
+	}
+	if len(this.InvalidTransactions) != len(that1.InvalidTransactions) {
+		return false
+	}
+	for i := range this.InvalidTransactions {
+		if !this.InvalidTransactions[i].Equal(that1.InvalidTransactions[i]) {
+			return false
+		}
+	}
+	if len(this.ScheduledMiniBlocks) != len(that1.ScheduledMiniBlocks) {
+		return false
+	}
+	for i := range this.ScheduledMiniBlocks {
+		if !this.ScheduledMiniBlocks[i].Equal(that1.ScheduledMiniBlocks[i]) {
+
 			return false
 		}
 	}
@@ -347,18 +318,7 @@ func (this *ScheduledSCRs) Equal(that interface{}) bool {
 	}
 	return true
 }
-func (this *SmartContractResults) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 5)
-	s = append(s, "&scheduled.SmartContractResults{")
-	if this.TxHandlers != nil {
-		s = append(s, "TxHandlers: "+fmt.Sprintf("%#v", this.TxHandlers)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
+
 func (this *GasAndFees) GoString() string {
 	if this == nil {
 		return "nil"
@@ -377,21 +337,18 @@ func (this *ScheduledSCRs) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := make([]string, 0, 7)
+	s := make([]string, 0, 9)
 	s = append(s, "&scheduled.ScheduledSCRs{")
 	s = append(s, "RootHash: "+fmt.Sprintf("%#v", this.RootHash)+",\n")
-	keysForScrs := make([]int32, 0, len(this.Scrs))
-	for k, _ := range this.Scrs {
-		keysForScrs = append(keysForScrs, k)
-	}
-	github_com_gogo_protobuf_sortkeys.Int32s(keysForScrs)
-	mapStringForScrs := "map[int32]SmartContractResults{"
-	for _, k := range keysForScrs {
-		mapStringForScrs += fmt.Sprintf("%#v: %#v,", k, this.Scrs[k])
-	}
-	mapStringForScrs += "}"
 	if this.Scrs != nil {
-		s = append(s, "Scrs: "+mapStringForScrs+",\n")
+		s = append(s, "Scrs: "+fmt.Sprintf("%#v", this.Scrs)+",\n")
+	}
+	if this.InvalidTransactions != nil {
+		s = append(s, "InvalidTransactions: "+fmt.Sprintf("%#v", this.InvalidTransactions)+",\n")
+	}
+	if this.ScheduledMiniBlocks != nil {
+		s = append(s, "ScheduledMiniBlocks: "+fmt.Sprintf("%#v", this.ScheduledMiniBlocks)+",\n")
+
 	}
 	if this.GasAndFees != nil {
 		s = append(s, "GasAndFees: "+fmt.Sprintf("%#v", this.GasAndFees)+",\n")
@@ -406,42 +363,6 @@ func valueToGoStringScheduled(v interface{}, typ string) string {
 	}
 	pv := reflect.Indirect(rv).Interface()
 	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
-func (m *SmartContractResults) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *SmartContractResults) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *SmartContractResults) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if len(m.TxHandlers) > 0 {
-		for iNdEx := len(m.TxHandlers) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.TxHandlers[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintScheduled(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0xa
-		}
-	}
-	return len(dAtA) - i, nil
 }
 
 func (m *GasAndFees) Marshal() (dAtA []byte, err error) {
@@ -534,19 +455,12 @@ func (m *ScheduledSCRs) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			i = encodeVarintScheduled(dAtA, i, uint64(size))
 		}
 		i--
-		dAtA[i] = 0x1a
+		dAtA[i] = 0x2a
 	}
-	if len(m.Scrs) > 0 {
-		keysForScrs := make([]int32, 0, len(m.Scrs))
-		for k := range m.Scrs {
-			keysForScrs = append(keysForScrs, int32(k))
-		}
-		github_com_gogo_protobuf_sortkeys.Int32s(keysForScrs)
-		for iNdEx := len(keysForScrs) - 1; iNdEx >= 0; iNdEx-- {
-			v := m.Scrs[int32(keysForScrs[iNdEx])]
-			baseI := i
+	if len(m.ScheduledMiniBlocks) > 0 {
+		for iNdEx := len(m.ScheduledMiniBlocks) - 1; iNdEx >= 0; iNdEx-- {
 			{
-				size, err := (&v).MarshalToSizedBuffer(dAtA[:i])
+				size, err := m.ScheduledMiniBlocks[iNdEx].MarshalToSizedBuffer(dAtA[:i])
 				if err != nil {
 					return 0, err
 				}
@@ -554,11 +468,35 @@ func (m *ScheduledSCRs) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 				i = encodeVarintScheduled(dAtA, i, uint64(size))
 			}
 			i--
-			dAtA[i] = 0x12
-			i = encodeVarintScheduled(dAtA, i, uint64(keysForScrs[iNdEx]))
+			dAtA[i] = 0x22
+		}
+	}
+	if len(m.InvalidTransactions) > 0 {
+		for iNdEx := len(m.InvalidTransactions) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.InvalidTransactions[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintScheduled(dAtA, i, uint64(size))
+			}
 			i--
-			dAtA[i] = 0x8
-			i = encodeVarintScheduled(dAtA, i, uint64(baseI-i))
+			dAtA[i] = 0x1a
+		}
+	}
+	if len(m.Scrs) > 0 {
+		for iNdEx := len(m.Scrs) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Scrs[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintScheduled(dAtA, i, uint64(size))
+			}
+
 			i--
 			dAtA[i] = 0x12
 		}
@@ -583,20 +521,6 @@ func encodeVarintScheduled(dAtA []byte, offset int, v uint64) int {
 	}
 	dAtA[offset] = uint8(v)
 	return base
-}
-func (m *SmartContractResults) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if len(m.TxHandlers) > 0 {
-		for _, e := range m.TxHandlers {
-			l = e.Size()
-			n += 1 + l + sovScheduled(uint64(l))
-		}
-	}
-	return n
 }
 
 func (m *GasAndFees) Size() (n int) {
@@ -638,12 +562,22 @@ func (m *ScheduledSCRs) Size() (n int) {
 		n += 1 + l + sovScheduled(uint64(l))
 	}
 	if len(m.Scrs) > 0 {
-		for k, v := range m.Scrs {
-			_ = k
-			_ = v
-			l = v.Size()
-			mapEntrySize := 1 + sovScheduled(uint64(k)) + 1 + l + sovScheduled(uint64(l))
-			n += mapEntrySize + 1 + sovScheduled(uint64(mapEntrySize))
+		for _, e := range m.Scrs {
+			l = e.Size()
+			n += 1 + l + sovScheduled(uint64(l))
+		}
+	}
+	if len(m.InvalidTransactions) > 0 {
+		for _, e := range m.InvalidTransactions {
+			l = e.Size()
+			n += 1 + l + sovScheduled(uint64(l))
+		}
+	}
+	if len(m.ScheduledMiniBlocks) > 0 {
+		for _, e := range m.ScheduledMiniBlocks {
+			l = e.Size()
+			n += 1 + l + sovScheduled(uint64(l))
+
 		}
 	}
 	if m.GasAndFees != nil {
@@ -659,21 +593,7 @@ func sovScheduled(x uint64) (n int) {
 func sozScheduled(x uint64) (n int) {
 	return sovScheduled(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
-func (this *SmartContractResults) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForTxHandlers := "[]*SmartContractResult{"
-	for _, f := range this.TxHandlers {
-		repeatedStringForTxHandlers += strings.Replace(fmt.Sprintf("%v", f), "SmartContractResult", "smartContractResult.SmartContractResult", 1) + ","
-	}
-	repeatedStringForTxHandlers += "}"
-	s := strings.Join([]string{`&SmartContractResults{`,
-		`TxHandlers:` + repeatedStringForTxHandlers + `,`,
-		`}`,
-	}, "")
-	return s
-}
+
 func (this *GasAndFees) String() string {
 	if this == nil {
 		return "nil"
@@ -692,19 +612,27 @@ func (this *ScheduledSCRs) String() string {
 	if this == nil {
 		return "nil"
 	}
-	keysForScrs := make([]int32, 0, len(this.Scrs))
-	for k, _ := range this.Scrs {
-		keysForScrs = append(keysForScrs, k)
+	repeatedStringForScrs := "[]*SmartContractResult{"
+	for _, f := range this.Scrs {
+		repeatedStringForScrs += strings.Replace(fmt.Sprintf("%v", f), "SmartContractResult", "smartContractResult.SmartContractResult", 1) + ","
 	}
-	github_com_gogo_protobuf_sortkeys.Int32s(keysForScrs)
-	mapStringForScrs := "map[int32]SmartContractResults{"
-	for _, k := range keysForScrs {
-		mapStringForScrs += fmt.Sprintf("%v: %v,", k, this.Scrs[k])
+	repeatedStringForScrs += "}"
+	repeatedStringForInvalidTransactions := "[]*Transaction{"
+	for _, f := range this.InvalidTransactions {
+		repeatedStringForInvalidTransactions += strings.Replace(fmt.Sprintf("%v", f), "Transaction", "transaction.Transaction", 1) + ","
 	}
-	mapStringForScrs += "}"
+	repeatedStringForInvalidTransactions += "}"
+	repeatedStringForScheduledMiniBlocks := "[]*MiniBlock{"
+	for _, f := range this.ScheduledMiniBlocks {
+		repeatedStringForScheduledMiniBlocks += strings.Replace(fmt.Sprintf("%v", f), "MiniBlock", "block.MiniBlock", 1) + ","
+	}
+	repeatedStringForScheduledMiniBlocks += "}"
 	s := strings.Join([]string{`&ScheduledSCRs{`,
 		`RootHash:` + fmt.Sprintf("%v", this.RootHash) + `,`,
-		`Scrs:` + mapStringForScrs + `,`,
+		`Scrs:` + repeatedStringForScrs + `,`,
+		`InvalidTransactions:` + repeatedStringForInvalidTransactions + `,`,
+		`ScheduledMiniBlocks:` + repeatedStringForScheduledMiniBlocks + `,`,
+
 		`GasAndFees:` + strings.Replace(this.GasAndFees.String(), "GasAndFees", "GasAndFees", 1) + `,`,
 		`}`,
 	}, "")
@@ -718,90 +646,7 @@ func valueToStringScheduled(v interface{}) string {
 	pv := reflect.Indirect(rv).Interface()
 	return fmt.Sprintf("*%v", pv)
 }
-func (m *SmartContractResults) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowScheduled
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: SmartContractResults: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: SmartContractResults: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TxHandlers", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowScheduled
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthScheduled
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthScheduled
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.TxHandlers = append(m.TxHandlers, &smartContractResult.SmartContractResult{})
-			if err := m.TxHandlers[len(m.TxHandlers)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipScheduled(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthScheduled
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
 
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
 func (m *GasAndFees) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -1077,93 +922,81 @@ func (m *ScheduledSCRs) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.Scrs == nil {
-				m.Scrs = make(map[int32]SmartContractResults)
+			m.Scrs = append(m.Scrs, &smartContractResult.SmartContractResult{})
+			if err := m.Scrs[len(m.Scrs)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
 			}
-			var mapkey int32
-			mapvalue := &SmartContractResults{}
-			for iNdEx < postIndex {
-				entryPreIndex := iNdEx
-				var wire uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowScheduled
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					wire |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				fieldNum := int32(wire >> 3)
-				if fieldNum == 1 {
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return ErrIntOverflowScheduled
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						mapkey |= int32(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
-					}
-				} else if fieldNum == 2 {
-					var mapmsglen int
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return ErrIntOverflowScheduled
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						mapmsglen |= int(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
-					}
-					if mapmsglen < 0 {
-						return ErrInvalidLengthScheduled
-					}
-					postmsgIndex := iNdEx + mapmsglen
-					if postmsgIndex < 0 {
-						return ErrInvalidLengthScheduled
-					}
-					if postmsgIndex > l {
-						return io.ErrUnexpectedEOF
-					}
-					mapvalue = &SmartContractResults{}
-					if err := mapvalue.Unmarshal(dAtA[iNdEx:postmsgIndex]); err != nil {
-						return err
-					}
-					iNdEx = postmsgIndex
-				} else {
-					iNdEx = entryPreIndex
-					skippy, err := skipScheduled(dAtA[iNdEx:])
-					if err != nil {
-						return err
-					}
-					if (skippy < 0) || (iNdEx+skippy) < 0 {
-						return ErrInvalidLengthScheduled
-					}
-					if (iNdEx + skippy) > postIndex {
-						return io.ErrUnexpectedEOF
-					}
-					iNdEx += skippy
-				}
-			}
-			m.Scrs[mapkey] = *mapvalue
 			iNdEx = postIndex
 		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field InvalidTransactions", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowScheduled
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthScheduled
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthScheduled
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.InvalidTransactions = append(m.InvalidTransactions, &transaction.Transaction{})
+			if err := m.InvalidTransactions[len(m.InvalidTransactions)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ScheduledMiniBlocks", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowScheduled
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthScheduled
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthScheduled
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ScheduledMiniBlocks = append(m.ScheduledMiniBlocks, &block.MiniBlock{})
+			if err := m.ScheduledMiniBlocks[len(m.ScheduledMiniBlocks)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 5:
+
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field GasAndFees", wireType)
 			}

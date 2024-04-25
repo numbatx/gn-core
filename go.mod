@@ -6,10 +6,11 @@ require (
 	github.com/btcsuite/btcutil v1.0.2
 	github.com/denisbrodbeck/machineid v1.0.1
 	github.com/gogo/protobuf v1.3.2
-	github.com/golang/protobuf v1.5.4
-	github.com/hashicorp/golang-lru v1.0.2
+	github.com/golang/protobuf v1.5.2
+	github.com/hashicorp/golang-lru v0.5.4
 	github.com/mr-tron/base58 v1.2.0
-	github.com/pelletier/go-toml v1.9.5
+	github.com/pelletier/go-toml v1.9.3
+
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.9.0
 	golang.org/x/crypto v0.22.0

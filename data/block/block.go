@@ -327,7 +327,7 @@ func (h *Header) SetMiniBlockHeaderHandlers(mbHeaderHandlers []data.MiniBlockHea
 	}
 
 	miniBlockHeaders := make([]MiniBlockHeader, len(mbHeaderHandlers))
-	h.MiniBlockHeaders = make([]MiniBlockHeader, len(mbHeaderHandlers))
+
 	for i, mbHeaderHandler := range mbHeaderHandlers {
 		mbHeader, ok := mbHeaderHandler.(*MiniBlockHeader)
 		if !ok {
@@ -427,8 +427,16 @@ func (mb *MiniBlock) Clone() *MiniBlock {
 		SenderShardID:   mb.SenderShardID,
 		Type:            mb.Type,
 	}
-	newMb.TxHashes = make([][]byte, len(mb.TxHashes))
-	copy(newMb.TxHashes, mb.TxHashes)
+
+	if mb.TxHashes != nil {
+		newMb.TxHashes = make([][]byte, len(mb.TxHashes))
+		copy(newMb.TxHashes, mb.TxHashes)
+	}
+
+	if mb.Reserved != nil {
+		newMb.Reserved = make([]byte, len(mb.Reserved))
+		copy(newMb.Reserved, mb.Reserved)
+	}
 
 	newMb.Reserved = make([]byte, len(mb.Reserved))
 	copy(newMb.Reserved, mb.Reserved)

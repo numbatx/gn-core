@@ -116,6 +116,10 @@ type MiniBlockHeaderHandler interface {
 	GetTxCount() uint32
 	GetTypeInt32() int32
 	GetReserved() []byte
+	GetProcessingType() int32
+	GetConstructionState() int32
+	IsFinal() bool
+
 
 	SetHash(hash []byte) error
 	SetSenderShardID(shardID uint32) error
@@ -123,6 +127,9 @@ type MiniBlockHeaderHandler interface {
 	SetTxCount(count uint32) error
 	SetTypeInt32(t int32) error
 	SetReserved(reserved []byte) error
+	SetProcessingType(procType int32) error
+	SetConstructionState(state int32) error
+
 	ShallowClone() MiniBlockHeaderHandler
 }
 
@@ -193,7 +200,8 @@ type EpochStartShardDataHandler interface {
 	SetPendingMiniBlockHeaders([]MiniBlockHeaderHandler) error
 }
 
-// EconomicHandler defines setters and getters for Economics
+// EconomicsHandler defines setters and getters for Economics
+
 type EconomicsHandler interface {
 	GetTotalSupply() *big.Int
 	GetTotalToDistribute() *big.Int
@@ -239,9 +247,10 @@ type ChainHandler interface {
 	GetGenesisHeaderHash() []byte
 	SetGenesisHeaderHash(hash []byte)
 	GetCurrentBlockHeader() HeaderHandler
-	SetCurrentBlockHeader(bh HeaderHandler) error
+	SetCurrentBlockHeaderAndRootHash(bh HeaderHandler, rootHash []byte) error
 	GetCurrentBlockHeaderHash() []byte
 	SetCurrentBlockHeaderHash(hash []byte)
+	GetCurrentBlockRootHash() []byte
 	IsInterfaceNil() bool
 }
 

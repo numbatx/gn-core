@@ -105,6 +105,16 @@ const BuiltInFunctionDCTNFTUpdateAttributes = "DCTNFTUpdateAttributes"
 // BuiltInFunctionMultiDCTNFTTransfer is the key for the Dharitri Core Token (DCT) multi transfer built-in function
 const BuiltInFunctionMultiDCTNFTTransfer = "MultiDCTNFTTransfer"
 
+// BuiltInFunctionSetGuardian is the key for setting a guardian built-in function
+const BuiltInFunctionSetGuardian = "SetGuardian"
+
+// BuiltInFunctionFreezeAccount is the built-in function key for freezing an account
+const BuiltInFunctionFreezeAccount = "FreezeAccount"
+
+// BuiltInFunctionUnfreezeAccount is the built-in function key for unfreezing an account
+const BuiltInFunctionUnfreezeAccount = "UnfreezeAccount"
+
+
 // DCTRoleLocalMint is the constant string for the local role of mint for DCT tokens
 const DCTRoleLocalMint = "DCTRoleLocalMint"
 
@@ -177,6 +187,9 @@ const DCTRoleIdentifier = "role"
 
 // DCTNFTLatestNonceIdentifier is the key prefix for dct latest nonce identifier
 const DCTNFTLatestNonceIdentifier = "nonce"
+
+// GuardiansKeyIdentifier is the key prefix for guardians
+const GuardiansKeyIdentifier = "guardians"
 
 // MaxNumShards represents the maximum number of shards possible in the system
 const MaxNumShards = 256
