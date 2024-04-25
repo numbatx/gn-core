@@ -438,8 +438,6 @@ func (mb *MiniBlock) Clone() *MiniBlock {
 		copy(newMb.Reserved, mb.Reserved)
 	}
 
-	newMb.Reserved = make([]byte, len(mb.Reserved))
-	copy(newMb.Reserved, mb.Reserved)
 
 	return newMb
 }

@@ -7,7 +7,6 @@ import (
 	"github.com/numbatx/gn-core/data/smartContractResult"
 	"github.com/numbatx/gn-core/data/transaction"
 
-)
 
 // GetTransactionHandlersMap returns the smart contract results as a map of transaction handlers
 func (sscr *ScheduledSCRs) GetTransactionHandlersMap() map[block.Type][]data.TransactionHandler {

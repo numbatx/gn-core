@@ -787,9 +787,7 @@ func TestMiniBlockHeader_IsFinal(t *testing.T) {
 	mbhr = &block.MiniBlockHeaderReserved{
 		ExecutionType: block.Scheduled,
 		State:         block.Proposed,
-	}<<<<<<< bhagya
-219
- 
+	}
 
 	_ = mbh.SetMiniBlockHeaderReserved(mbhr)
 	isFinal = mbh.IsFinal()

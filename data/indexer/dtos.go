@@ -42,14 +42,7 @@ type HeaderGasConsumption struct {
 	GasRefunded    uint64
 	GasPenalized   uint64
 	MaxGasPerBlock uint64
-}
 
-// HeaderGasConsumption holds the data needed to save the gas consumption of a header
-type HeaderGasConsumption struct {
-	GasProvided    uint64
-	GasRefunded    uint64
-	GasPenalized   uint64
-	MaxGasPerBlock uint64
 }
 
 // Pool will holds all types of transaction

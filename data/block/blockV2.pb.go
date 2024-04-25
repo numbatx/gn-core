@@ -632,7 +632,7 @@ func (m *MiniBlockHeaderReserved) Size() (n int) {
 	return n
 }
 
-=
+
 func sovBlockV2(x uint64) (n int) {
 	return (math_bits.Len64(x|1) + 6) / 7
 }
