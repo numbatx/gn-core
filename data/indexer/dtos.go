@@ -4,7 +4,25 @@ import (
 	"time"
 
 	"github.com/numbatx/gn-core/data"
+	"github.com/numbatx/gn-core/data/dct"
 )
+
+// AccountTokenData holds the data needed for indexing a token of an altered account
+type AccountTokenData struct {
+	Identifier string         `json:"identifier"`
+	Balance    string         `json:"balance"`
+	Nonce      uint64         `json:"nonce"`
+	Properties string         `json:"properties"`
+	MetaData   *dct.MetaData `json:"metadata"`
+}
+
+// AlteredAccount holds the data needed of an altered account in a block
+type AlteredAccount struct {
+	Address string              `json:"address"`
+	Balance string              `json:"balance,omitempty"`
+	Nonce   uint64              `json:"nonce"`
+	Tokens  []*AccountTokenData `json:"tokens"`
+}
 
 // ArgsSaveBlockData will contains all information that are needed to save block data
 type ArgsSaveBlockData struct {
@@ -13,7 +31,17 @@ type ArgsSaveBlockData struct {
 	Header                 data.HeaderHandler
 	SignersIndexes         []uint64
 	NotarizedHeadersHashes []string
+	HeaderGasConsumption   HeaderGasConsumption
 	TransactionsPool       *Pool
+	AlteredAccounts        map[string]*AlteredAccount
+}
+
+// HeaderGasConsumption holds the data needed to save the gas consumption of a header
+type HeaderGasConsumption struct {
+	GasProvided    uint64
+	GasRefunded    uint64
+	GasPenalized   uint64
+	MaxGasPerBlock uint64
 }
 
 // Pool will holds all types of transaction
@@ -23,7 +51,7 @@ type Pool struct {
 	Rewards  map[string]data.TransactionHandler
 	Invalid  map[string]data.TransactionHandler
 	Receipts map[string]data.TransactionHandler
-	Logs     map[string]data.LogHandler
+	Logs     []*data.LogData
 }
 
 // ValidatorRatingInfo is a structure containing validator rating information
@@ -38,5 +66,6 @@ type RoundInfo struct {
 	SignersIndexes   []uint64
 	BlockWasProposed bool
 	ShardId          uint32
+	Epoch            uint32
 	Timestamp        time.Duration
 }

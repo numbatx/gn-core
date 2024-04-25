@@ -18,4 +18,8 @@ const (
 	// DCTTransferAndExecute means that there is a smart contract execution after the DCT transfer
 	// this is needed in order to skip the check whether a contract is payable or not
 	DCTTransferAndExecute
+
+	// ExecOnDestByCaller means that the call is an invocation of a built in function / smart contract from
+	// another smart contract but the caller is from the previous caller
+	ExecOnDestByCaller
 )
