@@ -7,7 +7,7 @@ import (
 
 	"github.com/numbatx/gn-core/core"
 	"github.com/numbatx/gn-core/core/check"
-	"github.com/btcsuite/btcutil/bech32"
+	"github.com/btcsuite/btcd/btcutil/bech32"
 )
 
 type config struct {
