@@ -29,4 +29,3 @@ message MiniBlockHeaderReserved {
   ProcessingType ExecutionType = 1;
   MiniBlockState State = 2;
 }
-

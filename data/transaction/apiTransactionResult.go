@@ -81,7 +81,6 @@ type ApiSmartContractResult struct {
 	Operation         string      `json:"operation,omitempty"`
 	Function          string      `json:"function,omitempty"`
 	IsRelayed         bool        `json:"isRelayed,omitempty"`
-
 }
 
 // ApiReceipt represents a receipt with changed fields' types in order to make it friendly for API's json
