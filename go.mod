@@ -24,5 +24,3 @@ require (
 	google.golang.org/protobuf v1.26.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c // indirect
 )
-
-replace github.com/gogo/protobuf => github.com/numbatx/protobuf v1.3.2
