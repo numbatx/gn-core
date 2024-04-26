@@ -114,7 +114,6 @@ const BuiltInFunctionFreezeAccount = "FreezeAccount"
 // BuiltInFunctionUnfreezeAccount is the built-in function key for unfreezing an account
 const BuiltInFunctionUnfreezeAccount = "UnfreezeAccount"
 
-
 // DCTRoleLocalMint is the constant string for the local role of mint for DCT tokens
 const DCTRoleLocalMint = "DCTRoleLocalMint"
 

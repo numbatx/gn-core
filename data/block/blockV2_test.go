@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	"github.com/numbatx/gn-core/core"
-
 	"github.com/numbatx/gn-core/data"
 	"github.com/numbatx/gn-core/data/block"
 	"github.com/numbatx/gn-core/data/headerVersionData"
@@ -466,7 +465,6 @@ func TestHeaderV2_SetShardID(t *testing.T) {
 	require.Equal(t, shardId, h.GetShardID())
 }
 
-
 func TestHeaderV2_GetTxCountNilPointerReceiverOrInnerHeader(t *testing.T) {
 	t.Parallel()
 
@@ -804,7 +802,6 @@ func TestHeaderV2_GetMiniBlockHeadersWithDstShouldWork(t *testing.T) {
 
 	hashesWithDest2 := h.GetMiniBlockHeadersWithDst(2)
 
-
 	require.Equal(t, uint32(0), hashesWithDest2[string(hash1S0R2)])
 	require.Equal(t, uint32(0), hashesWithDest2[string(hash2S0R2)])
 }
@@ -848,7 +845,6 @@ func TestHeaderV2_GetOrderedCrossMiniblocksWithDstShouldWork(t *testing.T) {
 	}
 
 	miniBlocksInfo := h.GetOrderedCrossMiniblocksWithDst(2)
-
 
 	require.Equal(t, 2, len(miniBlocksInfo))
 	require.Equal(t, hash1Sh0ToSh2, miniBlocksInfo[0].Hash)
@@ -1130,7 +1126,6 @@ func TestHeaderV2_GetAdditionalData(t *testing.T) {
 	require.Equal(t, scheduledGasPenalized, additionalData.GetScheduledGasPenalized())
 	require.Equal(t, scheduledGasRefunded, additionalData.GetScheduledGasRefunded())
 }
-
 
 func TestHeaderV2_SetAdditionalDataNilAdditionalDataShouldErr(t *testing.T) {
 	t.Parallel()

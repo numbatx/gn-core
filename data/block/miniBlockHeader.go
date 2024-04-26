@@ -164,7 +164,6 @@ func (m *MiniBlockHeader) setMiniBlockHeaderReserved(mbhr *MiniBlockHeaderReserv
 	return nil
 }
 
-
 // ShallowClone returns the miniBlockHeader swallow clone
 func (m *MiniBlockHeader) ShallowClone() data.MiniBlockHeaderHandler {
 	if m == nil {
