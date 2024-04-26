@@ -6,8 +6,7 @@ import (
 	"testing"
 
 	"github.com/numbatx/gn-core/data"
-	block "github.com/numbatx/gn-core/data/block"
-
+	"github.com/numbatx/gn-core/data/block"
 	"github.com/numbatx/gn-core/data/headerVersionData"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
