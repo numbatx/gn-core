@@ -249,6 +249,8 @@ type ChainHandler interface {
 	GetCurrentBlockHeaderHash() []byte
 	SetCurrentBlockHeaderHash(hash []byte)
 	GetCurrentBlockRootHash() []byte
+	SetFinalBlockInfo(nonce uint64, blockHash []byte, rootHash []byte)
+	GetFinalBlockInfo() (nonce uint64, blockHash []byte, rootHash []byte)
 	IsInterfaceNil() bool
 }
 
